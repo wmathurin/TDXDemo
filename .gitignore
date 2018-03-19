@@ -1,0 +1,8 @@
+*.xcworkspace/
+*~
+.DS_Store
+Podfile.lock
+Pods/
+mobile_sdk/
+xcuserdata
+package-lock.json
