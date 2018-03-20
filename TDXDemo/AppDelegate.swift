@@ -58,7 +58,11 @@ class AppDelegate : UIResponder, UIApplicationDelegate
         .postLaunch {  [unowned self] (launchActionList: SFSDKLaunchAction) in
             let launchActionString = SalesforceSDKManager.launchActionsStringRepresentation(launchActionList)
             SalesforceSwiftLogger.log(type(of:self), level:.info, message:"Post-launch: launch actions taken: \(launchActionString)")
-                self.setupRootViewController()
+            
+            SalesforceSwiftSDKManager.shared().setupUserStoreFromDefaultConfig()
+            SalesforceSwiftSDKManager.shared().setupUserSyncsFromDefaultConfig()
+            
+            self.setupRootViewController()
             
         }.postLogout {  [unowned self] in
             self.handleSdkManagerLogout()
