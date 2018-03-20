@@ -1,7 +1,9 @@
 # TDXDemo
 Basic Mobile SDK Swift template modified to be offline first.
 The application was generated with:
-`forceios create --apptype=native_swift --appname=TDXDemo --packagename=com.acme --organization=Acme --outputdir=`
+```shell
+forceios create --apptype=native_swift --appname=TDXDemo --packagename=com.acme --organization=Acme --outputdir=
+```
 
 ## To get started do the following from the root directory
 ``` shell
