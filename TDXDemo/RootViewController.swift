@@ -26,30 +26,54 @@ import Foundation
 import UIKit
 import SalesforceSDKCore
 import SalesforceSwiftSDK
+import SmartStore
+import SmartSync
 import PromiseKit
 class RootViewController : UITableViewController
 {
     var dataRows = [NSDictionary]()
+    var store: SFSmartStore?
+    var syncManager: SFSmartSyncSyncManager?
     
     // MARK: - View lifecycle
     override func loadView()
     {
         super.loadView()
         self.title = "Mobile SDK Sample App"
-        let restApi = SFRestAPI.sharedInstance()
-        restApi.Promises
-        .query(soql: "SELECT Name FROM User LIMIT 10")
-        .then {  request  in
-            restApi.Promises.send(request: request)
-        }.done { [unowned self] response in
-            self.dataRows = response.asJsonDictionary()["records"] as! [NSDictionary]
-            SalesforceSwiftLogger.log(type(of:self), level:.debug, message:"request:didLoadResponse: #records: \(self.dataRows.count)")
-            DispatchQueue.main.async(execute: {
-                self.tableView.reloadData()
-            })
-        }.catch { error in
-             SalesforceSwiftLogger.log(type(of:self), level:.debug, message:"Error: \(error)")
-        }
+        
+        store = SFSmartStore.sharedStore(withName: kDefaultSmartStoreName) as?  SFSmartStore
+        syncManager = SFSmartSyncSyncManager.sharedInstance(for:store!)
+
+        self.loadFromStore()
+        
+        // Run (delta)sync if possible
+        _ = syncManager?.Promises
+            .reSync(syncName: "syncDownUsers")
+            .done { [unowned self] (_) in
+                self.loadFromStore()
+            }
+    }
+    
+    // MARK: - Loading from smartstore
+    func loadFromStore()
+    {
+        let querySpec = SFQuerySpec.Builder(soupName:"User")
+            .queryType(value:"range")
+            .orderPath(value:"Name")
+            .order(value:"ascending")
+            .build();
+        
+        _ = self.store?.Promises
+            .query(querySpec: querySpec, pageIndex: 0)
+            .done { records in
+                self.dataRows = records as! [NSDictionary];
+                DispatchQueue.main.async(execute: {
+                    self.tableView.reloadData()
+                })
+            }
+            .catch { error in
+                SalesforceSwiftLogger.log(type(of:self), level:.debug, message:"Error: \(error)")
+            }
     }
     
     // MARK: - Table view data source
