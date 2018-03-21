@@ -61,6 +61,7 @@ class RootViewController : UITableViewController
             .queryType(value:"range")
             .orderPath(value:"Name")
             .order(value:"ascending")
+            .pageSize(value: 100)
             .build();
         
         _ = self.store?.Promises
