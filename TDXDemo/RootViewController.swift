@@ -50,7 +50,36 @@ class RootViewController : UITableViewController
         // Run (delta)sync if possible
         _ = syncManager?.Promises
             .reSync(syncName: "syncDownUsers")
+            .done { [unowned self] (_) in
+                self.loadFromStore();
+        }
+        self.loadFromStore();
     }
+    
+    // MARK: - Loading from smartstore
+    func loadFromStore()
+    {
+        let querySpec = SFQuerySpec.Builder(soupName:"User")
+            .queryType(value: "smart")
+            .smartSql(value: "select {User:Name} from {User}")
+            .pageSize(value: 100)
+            .build();
+        
+        _ = self.store?.Promises
+            .query(querySpec: querySpec, pageIndex: 0)
+            .done { records in
+                self.dataRows = (records as! [[NSString]]).map({ row in
+                    return ["Name": row[0]];
+                })
+                DispatchQueue.main.async(execute: {
+                    self.tableView.reloadData()
+                })
+            }
+            .catch { error in
+                SalesforceSwiftLogger.log(type(of:self), level:.debug, message:"Error: \(error)")
+        }
+    }
+
     
     // MARK: - Table view data source
     func numberOfSectionsInTableView(tableView: UITableView) -> Int
