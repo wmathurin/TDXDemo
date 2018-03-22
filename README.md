@@ -16,7 +16,7 @@ node ./install.js
 ## Demo steps
 
 ### Add schema and sync config
-Add `userstore.json` file to TDXDemo target
+Add `userstore.json` file (make sure its target membership includes `TDXDemo`)
 ```json
 {
   "soups": [
@@ -31,7 +31,7 @@ Add `userstore.json` file to TDXDemo target
   ]
 }
 ```
-Add `usersyncs.json` to TDXDemo target
+Add `usersyncs.json` file (make sure its target membership includes `TDXDemo`)
 ```json
 {
   "syncs": [
@@ -54,7 +54,7 @@ SalesforceSwiftSDKManager.shared().setupUserSyncsFromDefaultConfig()
 **You can see the application at that stage by checking out tag `2_CONFIGS`.**
 
 ### Run sync at startup 
-Replace loadView with following lines in `RootViewController.swift`
+Replace `loadView()` with following lines in `RootViewController.swift`
 ```swift
     var store: SFSmartStore?
     var syncManager: SFSmartSyncSyncManager?
@@ -78,7 +78,7 @@ Replace loadView with following lines in `RootViewController.swift`
 
 ### Load data from store
 
-In loadView, call `self.loadFromStore()`  at startup and when sync completes.
+In `loadView()`, call `self.loadFromStore()`  at startup and when sync completes.
 
 ```swift
         // Run (delta)sync if possible
@@ -90,7 +90,7 @@ In loadView, call `self.loadFromStore()`  at startup and when sync completes.
         self.loadFromStore();
 ```
 
-Add the loadFromStore method.
+Add the `loadFromStore()` method.
 
 ```swift
     // MARK: - Loading from smartstore
