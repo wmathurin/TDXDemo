@@ -8,8 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		4F393A291C3C8BCD00B3EA13 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F393A281C3C8BCD00B3EA13 /* main.swift */; };
-		4F9EF28D20602E9A00E2BAC9 /* userstore.json in Resources */ = {isa = PBXBuildFile; fileRef = 4F9EF28B20602E9900E2BAC9 /* userstore.json */; };
-		4F9EF28E20602E9A00E2BAC9 /* usersyncs.json in Resources */ = {isa = PBXBuildFile; fileRef = 4F9EF28C20602E9900E2BAC9 /* usersyncs.json */; };
+		4F78AAE2206422EE00C9034A /* userstore.json in Resources */ = {isa = PBXBuildFile; fileRef = 4F78AAE1206422EE00C9034A /* userstore.json */; };
+		4F78AAE42064232300C9034A /* usersyncs.json in Resources */ = {isa = PBXBuildFile; fileRef = 4F78AAE32064232300C9034A /* usersyncs.json */; };
 		4FD6C47A1B754AF1002F9F90 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD6C4791B754AF1002F9F90 /* AppDelegate.swift */; };
 		4FD6C49F1B755242002F9F90 /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD6C49C1B755242002F9F90 /* RootViewController.swift */; };
 		4FD6C4A01B755242002F9F90 /* InitialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD6C49D1B755242002F9F90 /* InitialViewController.swift */; };
@@ -21,8 +21,8 @@
 /* Begin PBXFileReference section */
 		045D1C5BC2F1EADFDFB3671E /* Pods-TDXDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TDXDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-TDXDemo/Pods-TDXDemo.release.xcconfig"; sourceTree = "<group>"; };
 		4F393A281C3C8BCD00B3EA13 /* main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
-		4F9EF28B20602E9900E2BAC9 /* userstore.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = userstore.json; sourceTree = "<group>"; };
-		4F9EF28C20602E9900E2BAC9 /* usersyncs.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = usersyncs.json; sourceTree = "<group>"; };
+		4F78AAE1206422EE00C9034A /* userstore.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = userstore.json; path = ../../../../../Desktop/userstore.json; sourceTree = "<group>"; };
+		4F78AAE32064232300C9034A /* usersyncs.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = usersyncs.json; path = ../../../../../Desktop/usersyncs.json; sourceTree = "<group>"; };
 		4FD6C4741B754AF1002F9F90 /* TDXDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TDXDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4FD6C4781B754AF1002F9F90 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4FD6C4791B754AF1002F9F90 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -79,8 +79,8 @@
 		4FD6C4771B754AF1002F9F90 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				4F9EF28B20602E9900E2BAC9 /* userstore.json */,
-				4F9EF28C20602E9900E2BAC9 /* usersyncs.json */,
+				4F78AAE1206422EE00C9034A /* userstore.json */,
+				4F78AAE32064232300C9034A /* usersyncs.json */,
 				B7168FBB1FACC6F900A48DB5 /* LaunchScreen.storyboard */,
 				CEA8CA031F071B2300448B51 /* Images.xcassets */,
 				4FD6C4781B754AF1002F9F90 /* Info.plist */,
@@ -185,8 +185,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				CEA8CA041F071B2300448B51 /* Images.xcassets in Resources */,
-				4F9EF28E20602E9A00E2BAC9 /* usersyncs.json in Resources */,
-				4F9EF28D20602E9A00E2BAC9 /* userstore.json in Resources */,
+				4F78AAE42064232300C9034A /* usersyncs.json in Resources */,
+				4F78AAE2206422EE00C9034A /* userstore.json in Resources */,
 				B7168FBC1FACC6F900A48DB5 /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

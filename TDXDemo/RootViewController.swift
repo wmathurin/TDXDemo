@@ -29,6 +29,9 @@ import SalesforceSwiftSDK
 import SmartStore
 import SmartSync
 import PromiseKit
+import SmartSync
+import SmartStore
+
 class RootViewController : UITableViewController
 {
     var dataRows = [NSDictionary]()
@@ -44,37 +47,9 @@ class RootViewController : UITableViewController
         store = SFSmartStore.sharedStore(withName: kDefaultSmartStoreName) as?  SFSmartStore
         syncManager = SFSmartSyncSyncManager.sharedInstance(for:store!)
 
-        self.loadFromStore()
-        
         // Run (delta)sync if possible
         _ = syncManager?.Promises
             .reSync(syncName: "syncDownUsers")
-            .done { [unowned self] (_) in
-                self.loadFromStore()
-            }
-    }
-    
-    // MARK: - Loading from smartstore
-    func loadFromStore()
-    {
-        let querySpec = SFQuerySpec.Builder(soupName:"User")
-            .queryType(value:"range")
-            .orderPath(value:"Name")
-            .order(value:"ascending")
-            .pageSize(value: 100)
-            .build();
-        
-        _ = self.store?.Promises
-            .query(querySpec: querySpec, pageIndex: 0)
-            .done { records in
-                self.dataRows = records as! [NSDictionary];
-                DispatchQueue.main.async(execute: {
-                    self.tableView.reloadData()
-                })
-            }
-            .catch { error in
-                SalesforceSwiftLogger.log(type(of:self), level:.debug, message:"Error: \(error)")
-            }
     }
     
     // MARK: - Table view data source

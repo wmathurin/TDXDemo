@@ -4,6 +4,7 @@ The application was generated with:
 ```shell
 forceios create --apptype=native_swift --appname=TDXDemo --packagename=com.acme --organization=Acme --outputdir=
 ```
+**You can see the application at that stage by checking out tag `1_START`.**
 
 ## To get started do the following from the root directory
 ``` shell
@@ -50,7 +51,9 @@ SalesforceSwiftSDKManager.shared().setupUserStoreFromDefaultConfig()
 SalesforceSwiftSDKManager.shared().setupUserSyncsFromDefaultConfig()
 ```
 
-### Run sync at startup and load data from store
+**You can see the application at that stage by checking out tag `2_CONFIGS`.**
+
+### Run sync at startup 
 Replace loadView with following lines in `RootViewController.swift`
 ```swift
     var store: SFSmartStore?
@@ -65,29 +68,46 @@ Replace loadView with following lines in `RootViewController.swift`
         store = SFSmartStore.sharedStore(withName: kDefaultSmartStoreName) as?  SFSmartStore
         syncManager = SFSmartSyncSyncManager.sharedInstance(for:store!)
 
-        self.loadFromStore()
-        
+        // Run (delta)sync if possible
+        _ = syncManager?.Promises
+            .reSync(syncName: "syncDownUsers")
+    }
+```
+
+**You can see the application at that stage by checking out tag `3_SYNC`.**
+
+### Load data from store
+
+In loadView, call `self.loadFromStore()`  at startup and when sync completes.
+
+```swift
         // Run (delta)sync if possible
         _ = syncManager?.Promises
             .reSync(syncName: "syncDownUsers")
             .done { [unowned self] (_) in
-                self.loadFromStore()
+                self.loadFromStore();
             }
-    }
-    
+        self.loadFromStore();
+```
+
+Add the loadFromStore method.
+
+```swift
     // MARK: - Loading from smartstore
     func loadFromStore()
     {
         let querySpec = SFQuerySpec.Builder(soupName:"User")
-            .queryType(value:"range")
-            .orderPath(value:"Name")
-            .order(value:"ascending")
+            .queryType(value: "smart")
+            .smartSql(value: "select {User:Name} from {User}")
+            .pageSize(value: 100)
             .build();
         
         _ = self.store?.Promises
             .query(querySpec: querySpec, pageIndex: 0)
             .done { records in
-                self.dataRows = records as! [NSDictionary];
+                self.dataRows = (records as! [[NSString]]).map({ row in
+                    return ["Name": row[0]];
+                })
                 DispatchQueue.main.async(execute: {
                     self.tableView.reloadData()
                 })
@@ -97,3 +117,5 @@ Replace loadView with following lines in `RootViewController.swift`
             }
     }
 ```
+
+**You can see the application at that stage by checking out tag `4_OFFLINE`.**
